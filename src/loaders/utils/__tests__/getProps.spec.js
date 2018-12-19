@@ -188,6 +188,52 @@ The only true button.
 	expect(result).toMatchSnapshot();
 });
 
+it('should return inline example when inline code with a render modifier is provided', () => {
+	const result = getProps(
+		{
+			displayName: 'Button',
+			description: `
+			The only true button.
+			@example Inline Example:
+			\`\`\`jsx render
+			<Button>I Dare you</Button>
+			\`\`\``,
+		},
+		__filename
+	);
+
+	expect(result).toMatchSnapshot();
+});
+
+it('should not return inline example when inline code without a render modifier is provided', () => {
+	const result = getProps(
+		{
+			displayName: 'Button',
+			description: `
+			The only true button.
+			@example Inline Example:
+			\`\`\`jsx
+			<Button>I Dare you</Button>
+			\`\`\``,
+		},
+		__filename
+	);
+
+	expect(result).toMatchSnapshot();
+});
+
+it('should highlight code in description (regular code block)', () => {
+	const result = getProps({
+		description: `
+The only true button.
+
+    alert('Hello world');
+`,
+	});
+
+	expect(result).toMatchSnapshot();
+});
+
 it('should highlight code in description (fenced code block)', () => {
 	const result = getProps({
 		description: `
